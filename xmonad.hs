@@ -17,6 +17,7 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
+import XMonad.Hooks.SetWMName
 
 ------------------------------------------------------------------------
 -- Terminal
@@ -100,7 +101,7 @@ myBorderWidth = 1
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
-myModMask = mod1Mask
+myModMask = mod4Mask
  
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----------------------------------------------------------------------
@@ -193,7 +194,31 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- suspend
   , ((modMask .|. shiftMask, xK_s),
-     spawn "/usr/bin/sudo /bin/suspend.sh")
+     spawn "sudo pm-suspend")
+
+  -- HDMI above
+  , ((modMask .|. controlMask, xK_Up),
+     spawn "xrandr --output HDMI1 --auto; xrandr --output HDMI1 --above eDP1")
+
+  -- HDMI left
+  , ((modMask .|. controlMask, xK_Left),
+     spawn "xrandr --output HDMI1 --auto; xrandr --output HDMI1 --left-of eDP1")
+
+  -- HDMI right
+  , ((modMask .|. controlMask, xK_Right),
+     spawn "xrandr --output HDMI1 --auto; xrandr --output HDMI1 --right-of eDP1")
+
+  -- VGA above
+  , ((modMask .|. mod1Mask, xK_Up),
+     spawn "xrandr --output VGA1 --auto; xrandr --output VGA1 --above eDP1")
+
+  -- VGA left
+  , ((modMask .|. mod1Mask, xK_Left),
+     spawn "xrandr --output VGA1 --auto; xrandr --output VGA1 --left-of eDP1")
+
+  -- VGA right
+  , ((modMask .|. mod1Mask, xK_Right),
+     spawn "xrandr --output VGA1 --auto; xrandr --output VGA1 --right-of eDP1")
 
   -- external screens on
   , ((modMask .|. shiftMask, xK_n),
@@ -238,6 +263,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Toggle the status bar gap.
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
+ -- Lock Screen
+  , ((modMask, xK_z), 
+      spawn "gnome-screensaver-command -l")
+
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
      io (exitWith ExitSuccess))
@@ -245,14 +274,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Restart xmonad.
   , ((modMask, xK_q),
      restart "xmonad" True)
-
-  -- rhythmbox
-  , ((modMask, xK_n),
-     spawn "/usr/bin/rhythmbox-client --next")
-  , ((modMask, xK_p),
-     spawn "/usr/bin/rhythmbox-client --previous")
-  , ((modMask, xK_s),
-     spawn "/usr/bin/rhythmbox-client --play-pause")
 
   -- killer
   , ((modMask .|. shiftMask, xK_x),
@@ -306,11 +327,12 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 ---- startup :: X ()
 ---- startup = do
 ----           spawn ""
+--
 
 startup :: X ()
 startup = do
           spawn "./.fehbg"
-
+          setWMName "LG3D"
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
 --
@@ -325,21 +347,26 @@ startup = do
 --      , startupHook = setWMName "LG3D"
 --  }
 
-main = xmonad defaults 
+main = do
+        xmproc <- spawnPipe "xmobar"
+        xmonad $  defaultConfig 
+            {
+                -- simple stuff
+                terminal = myTerminal,
+                focusFollowsMouse = myFocusFollowsMouse,
+                clickJustFocuses = myClickJustFocuses,
+                borderWidth = myBorderWidth,
+                modMask = myModMask,
+                workspaces = myWorkspaces,
+                normalBorderColor = myNormalBorderColor,
+                focusedBorderColor = myFocusedBorderColor,
+                --layoutHook = defaultLayouts,
+             
+                layoutHook  = avoidStruts $ layoutHook defaultConfig,
+                -- key bindings
+                keys = myKeys,
+                mouseBindings = myMouseBindings,
 
-defaults = defaultConfig {
-    -- simple stuff
-    terminal = myTerminal,
-    focusFollowsMouse = myFocusFollowsMouse,
-    clickJustFocuses = myClickJustFocuses,
-    borderWidth = myBorderWidth,
-    modMask = myModMask,
-    workspaces = myWorkspaces,
-    normalBorderColor = myNormalBorderColor,
-    focusedBorderColor = myFocusedBorderColor,
-    layoutHook = defaultLayouts,
- 
-    -- key bindings
-    keys = myKeys,
-    mouseBindings = myMouseBindings
-}
+                -- startup hook
+                startupHook = startup
+            }
