@@ -18,6 +18,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import XMonad.Hooks.SetWMName
+import XMonad.Actions.CycleWS
 
 ------------------------------------------------------------------------
 -- Terminal
@@ -102,7 +103,7 @@ myBorderWidth = 1
 -- "windows key" is usually mod4Mask.
 --
 myModMask = mod4Mask
- 
+
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----------------------------------------------------------------------
   -- Custom key bindings
@@ -208,6 +209,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_Right),
      spawn "xrandr --output HDMI1 --auto; xrandr --output HDMI1 --right-of eDP1")
 
+  -- HDMI off
+  , ((modMask .|. controlMask, xK_Down),
+     spawn "xrandr --output HDMI1 --off")
+
   -- VGA above
   , ((modMask .|. mod1Mask, xK_Up),
      spawn "xrandr --output VGA1 --auto; xrandr --output VGA1 --above eDP1")
@@ -219,6 +224,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- VGA right
   , ((modMask .|. mod1Mask, xK_Right),
      spawn "xrandr --output VGA1 --auto; xrandr --output VGA1 --right-of eDP1")
+
+  -- VGA off
+  , ((modMask .|. mod1Mask, xK_Down),
+     spawn "xrandr --output VGA1 --off")
 
   -- external screens on
   , ((modMask .|. shiftMask, xK_n),
@@ -264,7 +273,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
  -- Lock Screen
-  , ((modMask, xK_z), 
+  , ((modMask, xK_z),
       spawn "gnome-screensaver-command -l")
 
   -- Quit xmonad.
@@ -280,7 +289,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "/usr/bin/xkill")
   ]
   ++
- 
+
   -- mod-[1..9], Switch to workspace N
   -- mod-shift-[1..9], Move client to workspace N
   [((m .|. modMask, k), windows $ f i)
@@ -293,7 +302,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
       | (key, sc) <- zip [xK_e, xK_w] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
- 
+
 ------------------------------------------------------------------------
 -- Mouse bindings
 --
@@ -304,14 +313,14 @@ myFocusFollowsMouse = False
 
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
- 
+
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   [
     ((modMask, button1),
-      (\w -> focus w >> mouseMoveWindow w)) 
+      (\w -> focus w >> mouseMoveWindow w))
     , ((modMask, button3),
       (\w -> focus w >> mouseResizeWindow w))
- 
+
   ]
 
 
@@ -323,7 +332,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 ----
 ---- By default, do nothing.
 ---- myStartupHook = myStartup
----- 
+----
 ---- startup :: X ()
 ---- startup = do
 ----           spawn ""
@@ -332,6 +341,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 startup :: X ()
 startup = do
           spawn "./.fehbg"
+          spawn "xcompmgr -f -D 4"
           setWMName "LG3D"
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
@@ -349,7 +359,7 @@ startup = do
 
 main = do
         xmproc <- spawnPipe "xmobar"
-        xmonad $  defaultConfig 
+        xmonad $  defaultConfig
             {
                 -- simple stuff
                 terminal = myTerminal,
@@ -361,7 +371,7 @@ main = do
                 normalBorderColor = myNormalBorderColor,
                 focusedBorderColor = myFocusedBorderColor,
                 --layoutHook = defaultLayouts,
-             
+
                 layoutHook  = avoidStruts $ layoutHook defaultConfig,
                 -- key bindings
                 keys = myKeys,
