@@ -47,7 +47,7 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9", "0"]
 
 -- Define default layouts used on most workspaces
 -- defaultLayouts = tiled ||| ThreeColMid 1 (3/100) (1/3) ||| Full
-defaultLayouts = tiled ||| Mirror tiled ||| Full
+defaultLayouts = avoidStruts ( tiled ||| Mirror tiled ||| noBorders Full)
     where
         -- default tiling algorithm partitions the screen into two panes
         tiled   = Tall nmaster delta ratio
@@ -131,7 +131,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Take full screenshot in multi-head mode.
   -- That is, take a screenshot of everything you see.
   , ((modMask .|. controlMask .|. shiftMask, xK_p),
-     spawn "screenshot")
+     spawn "gnome-screenshot -f ~/screen-shot.png")
 
   -- Mute volume.
   , ((0, 0x1008FF12),
@@ -370,9 +370,8 @@ main = do
                 workspaces = myWorkspaces,
                 normalBorderColor = myNormalBorderColor,
                 focusedBorderColor = myFocusedBorderColor,
-                --layoutHook = defaultLayouts,
+                layoutHook = defaultLayouts,
 
-                layoutHook  = avoidStruts $ layoutHook defaultConfig,
                 -- key bindings
                 keys = myKeys,
                 mouseBindings = myMouseBindings,
