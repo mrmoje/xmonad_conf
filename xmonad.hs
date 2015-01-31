@@ -238,8 +238,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "xrandr --output HDMI1 --off; xrandr --output VGA1 --off")
 
   -- Swap the focused window and the master window.
-  -- , ((modMask, xK_s),
-  --    windows W.swapMaster)
+  , ((modMask, xK_s),
+     windows W.swapMaster)
 
   -- Swap the focused window with the next window.
   , ((modMask .|. shiftMask, xK_j),
@@ -272,9 +272,17 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Toggle the status bar gap.
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
- -- Lock Screen
+  -- Lock Screen
   , ((modMask, xK_z),
       spawn "gnome-screensaver-command -l")
+
+  -- Nautilus
+  , ((modMask, xK_f),
+      spawn "/usr/bin/nautilus .")
+
+  -- Control Panel
+  , ((modMask, xK_c),
+      spawn "gnome-control-center")
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
