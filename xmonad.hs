@@ -19,6 +19,7 @@ import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import XMonad.Hooks.SetWMName
 import XMonad.Actions.CycleWS
+import XMonad.Hooks.EwmhDesktops
 
 ------------------------------------------------------------------------
 -- Terminal
@@ -131,7 +132,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Take full screenshot in multi-head mode.
   -- That is, take a screenshot of everything you see.
   , ((modMask .|. controlMask .|. shiftMask, xK_p),
-     spawn "gnome-screenshot -f ~/screen-shot.png")
+     spawn "gnome-screenshot -f ~/screenshot/screen-shot-`date +'%Y-%m-%dT%H:%M:%S'`.png")
 
   -- Mute volume.
   , ((0, 0x1008FF12),
