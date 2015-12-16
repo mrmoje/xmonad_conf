@@ -279,7 +279,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Nautilus
   , ((modMask, xK_f),
-      spawn "/usr/bin/nautilus .")
+      spawn "/usr/bin/nautilus --no-desktop .")
 
   -- Control Panel
   , ((modMask, xK_c),
