@@ -283,7 +283,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Control Panel
   , ((modMask, xK_c),
-      spawn "gnome-control-center")
+      spawn "gnome-control-center; unity-control-center")
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
