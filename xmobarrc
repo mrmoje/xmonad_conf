@@ -1,0 +1,17 @@
+Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
+, bgColor = "black"
+, fgColor = "grey"
+, position = Top
+, lowerOnStart = True
+, commands = [ Run BatteryP ["BAT1"]
+                            ["-t", "Battery: <left>% / <timeleft> / <acstatus> / <watts>"
+                            , "-L", "50", "-H", "75"
+                            , "-l", "red", "-n", "yellow", "-h", "green"
+                            ] 10
+             , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+             , Run StdinReader
+             ]
+, sepChar = "%"
+, alignSep = "}{"
+, template = "}{ %battery% | <fc=#ee9a00>%date%</fc>"
+}
