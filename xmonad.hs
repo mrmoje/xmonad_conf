@@ -136,15 +136,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Mute volume.
   , ((0, 0x1008FF12),
-     spawn "amixer -q set Master toggle")
+     spawn "amixer -q -D pulse set Master toggle")
 
   -- Decrease volume.
   , ((0, 0x1008FF11),
-     spawn "amixer -q set Master 10%-")
+     spawn "amixer -q -D pulse set Master 10%-")
 
   -- Increase volume.
   , ((0, 0x1008FF13),
-     spawn "amixer -q set Master 10%+")
+     spawn "amixer -q -D pulse set Master 10%+")
 
   -- Audio previous.
   , ((0, 0x1008FF16),
@@ -160,7 +160,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Eject CD tray.
   , ((0, 0x1008FF2C),
-     spawn "eject -T")
+     spawn "eject")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
