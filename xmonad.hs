@@ -41,7 +41,7 @@ myTerminal_big = "/usr/bin/gnome-terminal -zoom 3"
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9", "0"]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9","0"]
 
 
 
@@ -126,13 +126,17 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Take a screenshot in select mode.
   -- After pressing this key binding, click a window, or draw a rectangle with
   -- the mouse.
-  -- , ((modMask .|. shiftMask, xK_p),
+  -- , ((modMask .|. xK_Print),
   --   spawn "select-screenshot")
 
   -- Take full screenshot in multi-head mode.
   -- That is, take a screenshot of everything you see.
-  , ((modMask .|. controlMask .|. shiftMask, xK_p),
+  , ((modMask, xK_Print),
      spawn "gnome-screenshot -f ~/screenshot/screen-shot-`date +'%Y-%m-%dT%H:%M:%S'`.png")
+
+  -- Take screenshot interactive mode.
+  , ((0, xK_Print),
+     spawn "gnome-screenshot -i")
 
   -- Mute volume.
   , ((0, 0x1008FF12),
@@ -161,6 +165,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Eject CD tray.
   , ((0, 0x1008FF2C),
      spawn "eject")
+
+  -- calculator
+  , ((0, 0x1008FF1D),
+     spawn "gnome-calculator")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
