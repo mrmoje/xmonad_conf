@@ -1,0 +1,13 @@
+decorations none
+transparent false
+dockapp_mode none
+background "#000000"
+kludges force_icons_size,use_icons_hints
+grow_gravity W
+icon_gravity W
+icon_size 32
+sticky true
+window_type dock
+window_layer bottom
+no_shrink false
+skip_taskbar true
