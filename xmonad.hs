@@ -17,7 +17,6 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
-import XMonad.Hooks.SetWMName
 import XMonad.Actions.CycleWS
 import XMonad.Hooks.EwmhDesktops
 
@@ -135,7 +134,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "gnome-screenshot -f ~/screenshot/screen-shot-`date +'%Y-%m-%dT%H:%M:%S'`.png")
 
   -- Take screenshot interactive mode.
-  , ((0, xK_Print),
+  , ((modMask .|. shiftMask, xK_i),
      spawn "gnome-screenshot -i")
 
   -- Mute volume.
@@ -208,43 +207,43 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- HDMI above
   , ((modMask .|. controlMask, xK_Up),
-     spawn "xrandr --output HDMI1 --auto; xrandr --output HDMI1 --above eDP1")
+     spawn "xrandr --output HDMI-1 --auto --above eDP-1")
 
   -- HDMI left
   , ((modMask .|. controlMask, xK_Left),
-     spawn "xrandr --output HDMI1 --auto; xrandr --output HDMI1 --left-of eDP1")
+     spawn "xrandr --output HDMI-1 --auto --left-of eDP-1")
 
   -- HDMI right
   , ((modMask .|. controlMask, xK_Right),
-     spawn "xrandr --output HDMI1 --auto; xrandr --output HDMI1 --right-of eDP1")
+     spawn "xrandr --output HDMI-1 --right-of eDP-1")
 
   -- HDMI off
   , ((modMask .|. controlMask, xK_Down),
-     spawn "xrandr --output HDMI1 --off")
+     spawn "xrandr --output HDMI-1 --off")
 
   -- VGA above
   , ((modMask .|. mod1Mask, xK_Up),
-     spawn "xrandr --output VGA1 --auto; xrandr --output VGA1 --above eDP1")
+     spawn "xrandr --output VGA-1 --auto --above eDP-1")
 
   -- VGA left
   , ((modMask .|. mod1Mask, xK_Left),
-     spawn "xrandr --output VGA1 --auto; xrandr --output VGA1 --left-of eDP1")
+     spawn "xrandr --output VGA-1 --auto --left-of eDP-1")
 
   -- VGA right
   , ((modMask .|. mod1Mask, xK_Right),
-     spawn "xrandr --output VGA1 --auto; xrandr --output VGA1 --right-of eDP1")
+     spawn "xrandr --output VGA-1 --auto --right-of eDP-1")
 
   -- VGA off
   , ((modMask .|. mod1Mask, xK_Down),
-     spawn "xrandr --output VGA1 --off")
+     spawn "xrandr --output VGA-1 --off")
 
   -- external screens on
   , ((modMask .|. shiftMask, xK_n),
-     spawn "xrandr --output HDMI1 --auto; xrandr --output HDMI1 --left-of eDP1; xrandr --output VGA1 --auto; xrandr --output VGA1 --right-of eDP1")
+     spawn "xrandr --output HDMI-1 --auto --left-of eDP-1; xrandr --output VGA-1 --auto --right-of eDP-1")
 
   -- external screens off
   , ((modMask .|. shiftMask, xK_f),
-     spawn "xrandr --output HDMI1 --off; xrandr --output VGA1 --off")
+     spawn "xrandr --output HDMI-1 --off; xrandr --output VGA-1 --off")
 
   -- Swap the focused window and the master window.
   , ((modMask, xK_s),
@@ -283,7 +282,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Lock Screen
   , ((modMask, xK_z),
-      spawn "gnome-screensaver-command -l")
+      spawn "gnome-screensaver-command -l && sudo pm-suspend")
 
   -- Nautilus
   , ((modMask, xK_f),
@@ -359,6 +358,7 @@ startup :: X ()
 startup = do
           spawn "./.fehbg"
           spawn "xcompmgr -f -D 4"
+          spawn "killall stalonetray; stalonetray -c  ~/.xmonad/stalonetrayrc"
           setWMName "LG3D"
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
@@ -375,7 +375,7 @@ startup = do
 --  }
 
 main = do
-        xmproc <- spawnPipe "xmobar"
+        xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
         xmonad $  defaultConfig
             {
                 -- simple stuff
@@ -388,6 +388,7 @@ main = do
                 normalBorderColor = myNormalBorderColor,
                 focusedBorderColor = myFocusedBorderColor,
                 layoutHook = defaultLayouts,
+                manageHook = manageDocks <+> manageHook defaultConfig,
 
                 -- key bindings
                 keys = myKeys,
