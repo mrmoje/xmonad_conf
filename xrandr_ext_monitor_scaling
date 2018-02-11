@@ -1,0 +1,5 @@
+xrandr --output HDMI-A-2 --mode 1920x1080 --right-of eDP --scale 1.66667x1.66667 --fb 6080x1800 --panning 1920x1080
+xrandr --output HDMI-A-2 --off
+xrandr --output HDMI-A-2 --mode 1920x1080 --right-of eDP --scale 1.66667x1.66667 --fb 6080x1800 --panning 1900x1080
+echo "255" > /sys/class/leds/smc::kbd_backlight/brightness
+xrandr --output DisplayPort-0 --scale 1.66667x1.66667 --mode 1920x1080 --pos 0x0 --output eDP --auto --pos 3200x0 --output HDMI-A-2 --mode 1920x1080 --scale 1.66667x1.66667 --pos 6080x0
