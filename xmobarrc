@@ -1,17 +1,20 @@
-Config { font = "xft:Ubuntu Mono:size=14:bold:antialias=true"
-, bgColor = "black"
-, fgColor = "grey"
-, position = Top
-, lowerOnStart = True
-, commands = [ Run BatteryP ["BAT0"]
-                            ["-t", "Battery:<left>% / ETtPO:<timeleft> / AC:<acstatus>"
-                            , "-L", "50", "-H", "75"
-                            , "-l", "red", "-n", "yellow", "-h", "green"
-                            ] 10
-             , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
-             , Run StdinReader
-             ]
-, sepChar = "%"
-, alignSep = "}{"
-, template = "}{ %battery% | <fc=#ee9a00>%date%</fc>"
+Config {
+    font = "xft:Bitstream Vera Sans Mono:size=11:bold:antialias=true"
+  , bgColor = "black"
+  , fgColor = "grey"
+  , position = Top
+  , lowerOnStart = True
+  , hideOnStart = False
+  , allDesktops = True
+  , commands = [ Run BatteryP [ "BAT1" ]
+                              [ "-t", "Bat: <left>% / ETPO: <timeleft> / AC: <acstatus>"
+                              , "-L", "50", "-H", "75"
+                              , "-l", "red", "-n", "yellow", "-h", "green"
+                              ] 10
+               , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+               , Run StdinReader
+               ]
+  , sepChar = "%"
+  , alignSep = "}{"
+  , template = "}{ %battery% | <fc=#ee9a00>%date%</fc>"
 }
