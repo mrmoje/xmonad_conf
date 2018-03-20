@@ -5,7 +5,7 @@ background "#000000"
 kludges force_icons_size,use_icons_hints
 grow_gravity W
 icon_gravity W
-icon_size 32
+icon_size 16
 sticky true
 window_type dock
 window_layer bottom
