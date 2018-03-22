@@ -6,7 +6,7 @@ Config {
   , lowerOnStart = True
   , hideOnStart = False
   , allDesktops = True
-  , commands = [ Run BatteryP [ "BAT1" ]
+  , commands = [ Run BatteryP [ "BAT0" ]
                               [ "-t", "Bat: <left>% / ETPO: <timeleft> / AC: <acstatus>"
                               , "-L", "50", "-H", "75"
                               , "-l", "red", "-n", "yellow", "-h", "green"
