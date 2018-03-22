@@ -20,7 +20,8 @@ import qualified XMonad.StackSet as W
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "/usr/bin/xterm -bg black -fg green -fa hack -fs 11 -ls -sl 65536"
+-- myTerminal      = "/usr/bin/xterm -bg black -fg green -fa hack -fs 11 -ls -sl 65536"
+myTerminal      = "xfce4-terminal"
 
 -- Command to launch the bar.
 myBar = "killall xmobar; xmobar ~/.xmonad/xmobarrc"
@@ -164,43 +165,43 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
   -- HDMI above
   , ((modm .|. controlMask, xK_Up),
-     spawn "xrandr --output HDMI1 --auto --above eDP1")
+     spawn "xrandr --output HDMI-1 --auto --above eDP-1")
 
   -- HDMI left
   , ((modm .|. controlMask, xK_Left),
-     spawn "xrandr --output HDMI1 --auto --left-of eDP1")
+     spawn "xrandr --output HDMI-1 --auto --left-of eDP-1")
 
   -- HDMI right
   , ((modm .|. controlMask, xK_Right),
-     spawn "xrandr --output HDMI1 --right-of eDP1")
+     spawn "xrandr --output HDMI-1 --right-of eDP-1")
 
   -- HDMI off
   , ((modm .|. controlMask, xK_Down),
-     spawn "xrandr --output HDMI1 --off")
+     spawn "xrandr --output HDMI-1 --off")
 
   -- VGA above
   , ((modm .|. mod1Mask, xK_Up),
-     spawn "xrandr --output VGA1 --auto --above eDP1")
+     spawn "xrandr --output VGA-1 --auto --above eDP-1")
 
   -- VGA left
   , ((modm .|. mod1Mask, xK_Left),
-     spawn "xrandr --output VGA1 --auto --left-of eDP1")
+     spawn "xrandr --output VGA-1 --auto --left-of eDP-1")
 
   -- VGA right
   , ((modm .|. mod1Mask, xK_Right),
-     spawn "xrandr --output VGA1 --auto --right-of eDP1")
+     spawn "xrandr --output VGA-1 --auto --right-of eDP-1")
 
   -- VGA off
   , ((modm .|. mod1Mask, xK_Down),
-     spawn "xrandr --output VGA1 --off")
+     spawn "xrandr --output VGA-1 --off")
 
   -- external screens on
   , ((modm .|. shiftMask, xK_n),
-     spawn "xrandr --output HDMI1 --auto --left-of eDP1; xrandr --output VGA1 --auto --right-of eDP1")
+     spawn "xrandr --output HDMI-1 --auto --left-of eDP-1; xrandr --output VGA-1 --auto --right-of eDP-1")
 
   -- external screens off
   , ((modm .|. shiftMask, xK_f),
-     spawn "xrandr --output HDMI1 --off; xrandr --output VGA1 --off")
+     spawn "xrandr --output HDMI-1 --off; xrandr --output VGA-1 --off")
 
   -- Swap the focused window and the master window.
   , ((modm, xK_s),
