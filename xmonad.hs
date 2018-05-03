@@ -17,11 +17,13 @@ import XMonad.Layout.NoBorders
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
+
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
 -- myTerminal      = "/usr/bin/xterm -bg black -fg green -fa hack -fs 11 -ls -sl 65536"
-myTerminal      = "xfce4-terminal"
+-- myTerminal      = "xfce4-terminal"
+myTerminal      = "qterminal"
 
 -- Command to launch the bar.
 myBar = "killall xmobar; xmobar ~/.xmonad/xmobarrc"
