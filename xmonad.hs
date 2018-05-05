@@ -54,7 +54,7 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9","0"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -242,7 +242,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       spawn "slock")
 
   -- Nautilus
-  , ((modm, xK_f),
+  , ((modm, xK_g),
   --    spawn "xfe")
       spawn "thunar")
 
